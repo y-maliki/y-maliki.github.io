@@ -1,0 +1,165 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D&D coin distributor</title>
+<link rel="stylesheet" href="mainpagedesign.css">
+</head>
+
+
+<body>
+ <div class="header">
+  <h1>Loot distributor</h1>
+</div>
+
+<div class="navbar">
+  <a href="mainpage.html">Option A</a>
+  <a href="secondpage.html" class="right">Option B</a>
+  <p class = "center">Please choose one of the two distribution methods</p>
+</div>
+
+<div class="row">
+  <div class="side">
+    <a href="mainpage.html"
+    <h1>Option A:</h1>
+    <p>This method will distribute the coins evenly among players 
+        without converting the excess into a lower value piece.
+    </p>
+    </a>
+    
+    <a href="secondpage.html"
+    <h1>Option B:</h1>
+    <p>This option will distribute the coins evenly among players 
+        and convert the excess into a lower value piece.
+    </p>
+    </a>
+    
+  </div>
+
+  <div class="main">
+    <h1>Option A:</h1>
+    <p>This method will distribute the coins evenly among players 
+        without converting the excess into a lower value piece. <br>
+    </p>
+    <p>For example, if the party has 3 members and the following loot is obtained:
+       20 gold pieces, 47 silver pieces and 75 copper pieces;
+        the loot will be distributed as follows:
+        <br>
+        Each player will receive:
+        <br>
+        <ul>
+          <li>6 gold pieces</li>
+          <li>15 silver pieces</li>
+          <li>25 copper pieces</li>
+        </ul>
+        There are 2 gold pieces, 2 silver pieces and 0 copper pieces left over.
+        <br>
+    </p>
+
+    <br>
+    <label for ="partySize">Number of members in the group: </label>
+    <input type="number" id="partySize" name="partySize" min="1">
+    <br>
+    <br>
+    <br>
+
+    <p>Are you using electrum pieces?</p>
+        <button class="button" onclick ="showElectrumPieces(true)">Yes</button>
+        <button class="button" onclick ="showElectrumPieces(false)">No</button>
+<br>
+<br>
+        <label for ="platinumPieces">Platinum pieces: </label>
+        <input type="number" id="platinumPieces" name="platinumPieces" min="0">
+    <br>
+
+        <label for ="goldPieces">Gold pieces: </label>
+        <input type="number" id="goldPieces" name="goldPieces" min="0">
+    <br>
+
+    <div id ="electrumPieccesInput" style ="display: none">
+        <label for ="electrumPieces">Electrum pieces: </label>
+        <input type="number" id="electrumPieces" name="electrumPieces" min="0">
+      <br>
+    </div>
+
+        <label for ="silverPieces">Silver pieces: </label>
+        <input type="number" id="silverPieces" name="silverPieces" min="0">
+    <br>
+
+        <label for ="copperPieces">Copper pieces: </label>
+        <input type="number" id="copperPieces" name="copperPieces" min="0">
+    <br>
+
+    <button class="button" onclick="calculateLoot()">Distribute</button>
+    <br>
+    <br>
+    <div id="result" class="results-box"></div>
+
+
+  </div>
+
+ <script>
+  let useElectrumPieces = false;
+function showElectrumPieces(show) {
+    useElectrumPieces = show;
+    const  electrumInput = document.getElementById("electrumPieccesInput");
+    if (show) {
+        electrumInput.style.display = "block";
+    } else {
+        electrumInput.style.display = "none";
+    }
+  }
+
+  function calculateLoot() {
+    const partySize = parseInt(document.getElementById("partySize").value);
+    const platinumPieces = parseInt(document.getElementById("platinumPieces").value) || 0;
+    const goldPieces = parseInt(document.getElementById("goldPieces").value) || 0;
+    const electrumPieces = parseInt(document.getElementById("electrumPieces").value) || 0;
+    const silverPieces = parseInt(document.getElementById("silverPieces").value) || 0;
+    const copperPieces = parseInt(document.getElementById("copperPieces").value) || 0;
+
+    platinumPiecesPerPlayer = Math.floor(platinumPieces / partySize);
+    goldPiecesPerPlayer = Math.floor(goldPieces / partySize);
+    electrumPiecesPerPlayer = Math.floor(electrumPieces / partySize);
+    silverPiecesPerPlayer = Math.floor(silverPieces / partySize);
+    copperPiecesPerPlayer = Math.floor(copperPieces / partySize);
+
+    const platinumPiecesLeft = platinumPieces % partySize;
+    const goldPiecesLeft = goldPieces % partySize;
+    const electrumPiecesLeft = electrumPieces % partySize;
+    const silverPiecesLeft = silverPieces % partySize;
+    const copperPiecesLeft = copperPieces % partySize;
+
+    let result =  ""
+    result += "Each player will receive:\n";
+    result += platinumPiecesPerPlayer + " platinum pieces\n";
+    result += goldPiecesPerPlayer + " gold pieces\n";
+    if (useElectrumPieces) { result += electrumPiecesPerPlayer + " electrum pieces\n"; }
+    result += silverPiecesPerPlayer + " silver pieces\n";
+    result += copperPiecesPerPlayer + " copper pieces\n";
+    result += '\n';
+    result += "Leftover coins:\n";
+    result += platinumPiecesLeft + " platinum pieces\n";
+    result += goldPiecesLeft + " gold pieces\n";
+    if(useElectrumPieces) { result += electrumPiecesLeft + " electrum pieces\n"; }
+    result += silverPiecesLeft + " silver pieces\n";
+    result += copperPiecesLeft + " copper pieces\n";
+    
+    document.getElementById("result").textContent = result;
+   }
+
+
+ </script> 
+
+</div>
+
+ <div class="footer">
+  <p>I hope you find or found this useful! ^^</p>
+   <address>
+    <p>Created by: <a href="mailto: malikiyasser1@gmail.com">Yasser Maliki</a></p>
+  </address>
+</div> 
+
+</body>
+</html> 
